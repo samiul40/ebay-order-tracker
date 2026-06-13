@@ -1,57 +1,154 @@
 {
   "Black Shoe Protector - Size L": {
     "ebay_titles": [
-      "Black Shoe Protector - Size L",
-      "Black Shoe Protector Large",
-      "Black Shoe Protector L"
+      "Shoe Shield Crease Trainer Protector Decreaser Airforce Gift Jordan Air Force 1[Black,L UK 7-12 / EU 41-46]"
     ],
-    "postage_type": "large"
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
   },
   "Black Shoe Protector - Size S": {
     "ebay_titles": [
-      "Black Shoe Protector - Size S",
-      "Black Shoe Protector Small",
-      "Black Shoe Protector S"
+      "Shoe Shield Crease Trainer Protector Decreaser Airforce Gift Jordan Air Force 1[Black,S UK 3-7 / EU 35-40]"
     ],
-    "postage_type": "large"
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
   },
   "White Shoe Protector - Size L": {
     "ebay_titles": [
-      "White Shoe Protector - Size L",
-      "White Shoe Protector Large",
-      "White Shoe Protector L"
+      "Shoe Shield Crease Trainer Protector Decreaser Airforce Gift Jordan Air Force 1[White,L UK 7-12 / EU 41-46]"
     ],
-    "postage_type": "large"
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
   },
   "White Shoe Protector - Size S": {
     "ebay_titles": [
-      "White Shoe Protector - Size S",
-      "White Shoe Protector Small",
-      "White Shoe Protector S"
+      "Shoe Shield Crease Trainer Protector Decreaser Airforce Gift Jordan Air Force 1[White,S UK 3-7 / EU 35-40]"
     ],
-    "postage_type": "large"
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
+  },
+  "Airpods Eurbuds - Size S": {
+    "ebay_titles": [
+      "AirPods Pro Gen 1 or Gen 2 Silicone Ear Tips – S/M/L – Replacement Buds[For Apple AirPods Pro (1st Gen),Small]",
+      "AirPods Pro Gen 1 or Gen 2 Silicone Ear Tips – S/M/L – Replacement Buds[For Apple AirPods Pro (2nd Gen),Small]",
+      "Replacement Ear Tips for AirPods Pro 1st 2nd Gen – S/M/L Sizes – Silicone Buds[1 Pair (2 Pieces),Small]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Airpods Eurbuds - Size M": {
+    "ebay_titles": [
+      "AirPods Pro Gen 1 or Gen 2 Silicone Ear Tips – S/M/L – Replacement Buds[For Apple AirPods Pro (1st Gen),Medium]",
+      "AirPods Pro Gen 1 or Gen 2 Silicone Ear Tips – S/M/L – Replacement Buds[For Apple AirPods Pro (2nd Gen),Medium]",
+      "Replacement Ear Tips for AirPods Pro 1st 2nd Gen – S/M/L Sizes – Silicone Buds[1 Pair (2 Pieces),Medium]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Airpods Eurbuds - Size L": {
+    "ebay_titles": [
+      "AirPods Pro Gen 1 or Gen 2 Silicone Ear Tips – S/M/L – Replacement Buds[For Apple AirPods Pro (1st Gen),Large]",
+      "AirPods Pro Gen 1 or Gen 2 Silicone Ear Tips – S/M/L – Replacement Buds[For Apple AirPods Pro (2nd Gen),Large]",
+      "Replacement Ear Tips for AirPods Pro 1st 2nd Gen – S/M/L Sizes – Silicone Buds[1 Pair (2 Pieces),Large]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Airpods Eurbuds - Multipack (S/M/L)": {
+    "ebay_titles": [
+      "Replacement Ear Tips for AirPods Pro 1st 2nd Gen – S/M/L Sizes – Silicone Buds[Multipack (S,M,L),Small]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\"",
+    "components": [
+      "Airpods Eurbuds - Size S",
+      "Airpods Eurbuds - Size M",
+      "Airpods Eurbuds - Size L"
+    ]
   },
   "Black Aux Type C Adapter": {
     "ebay_titles": [
-      "Black Aux Type C Adapter",
-      "Black Aux Adapter Type C",
-      "Type C Aux Adapter Black"
+      "USB Type C to 3.5mm Headphone Adapter Digital AUX Audio Jack Cable for Samsung[Black]"
     ],
-    "postage_type": "small"
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
   },
   "White Aux Type C Adapter": {
     "ebay_titles": [
-      "White Aux Type C Adapter",
-      "White Aux Adapter Type C",
-      "Type C Aux Adapter White"
+      "USB Type C to 3.5mm Headphone Adapter Digital AUX Audio Jack Cable for Samsung[White]"
     ],
-    "postage_type": "small"
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
   },
-  "Metal Straw": {
+  "Type C to Type C": {
     "ebay_titles": [
-      "Metal Straw",
-      "Reusable Metal Straw"
+      "USB C to USB C Cable PD 60W Fast Charger Braided Type C Lead Wire 1M 2M[1M]",
+      "USB C to USB C Cable PD 60W Fast Charger Braided Type C Lead Wire 1M 2M[2M]"
     ],
-    "postage_type": "large"
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
+  },
+  "Type C to USB A": {
+    "ebay_titles": [
+      "USB A to Type C Cable 3A Fast Charger Braided Heavy Duty USB-C Lead 1M 2M 3M[1M]",
+      "USB A to Type C Cable 3A Fast Charger Braided Heavy Duty USB-C Lead 1M 2M 3M[2M]",
+      "USB A to Type C Cable 3A Fast Charger Braided Heavy Duty USB-C Lead 1M 2M 3M[3M]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
+  },
+  "Black Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Black]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Blue Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Blue (Light Blue)]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Red Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Red]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Pink Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Pink]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "White Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[White]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Grey Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Grey]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Green Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Green]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Light Pink Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Light Pink]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Orange Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Orange]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Brown Silicone Suction Cup": {
+    "ebay_titles": [
+      "Mobile Phone Silicone Suction Cup Sticky Mount Universal Mobile Grip Stand Pad[Brown]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 4\" - 6\""
+  },
+  "Card Sleeves": {
+    "ebay_titles": [
+      "Trading Card Sleeves Clear Soft Penny Sleeves Standard Size Pokemon MTG 100 Pack"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
   }
 }
