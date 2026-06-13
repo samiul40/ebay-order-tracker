@@ -11,11 +11,17 @@ Usage:
 import argparse
 from datetime import datetime, timedelta, timezone
 
+from pathlib import Path
+
 from api import fetch_orders
-from auth import get_app_token
+from auth import get_user_token
 from config import EBAY_ENV
 from excel import write_excel
+from finances import fetch_ad_fees
 from transform import load_postage_costs, load_product_map, transform_orders
+
+OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR.mkdir(exist_ok=True)
 
 
 def main():
@@ -40,7 +46,7 @@ def main():
     parser.add_argument(
         "--out",
         dest="output",
-        default=f"ebay_orders_{today}.xlsx",
+        default=str(OUTPUT_DIR / f"ebay_orders_{today}.csv"),
         help="Output filename",
     )
     args = parser.parse_args()
@@ -48,7 +54,7 @@ def main():
     print(f"eBay Order Tracker — {args.from_date} to {args.to_date}")
     print(f"Environment: {EBAY_ENV}")
 
-    token = get_app_token()
+    token = get_user_token()
     orders = fetch_orders(token, args.from_date, args.to_date)
 
     if not orders:
@@ -58,7 +64,9 @@ def main():
     product_map = load_product_map()
     postage_costs = load_postage_costs()
 
-    rows = transform_orders(orders, product_map, postage_costs)
+    ad_fees = fetch_ad_fees(token, args.from_date, args.to_date)
+    orders.sort(key=lambda o: o.get("creationDate", ""))
+    rows = transform_orders(orders, product_map, postage_costs, ad_fees)
     write_excel(rows, args.output)
 
 

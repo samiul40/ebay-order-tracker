@@ -1,34 +1,38 @@
-from openpyxl import Workbook
+import csv
 
 COLUMNS = [
     "Date",
+    "Date (num)",
     "Platform",
     "Order ID",
     "Multiple (?)",
+    "Batch Helper",
     "batch_id",
     "Product",
+    "Category",
     "Quantity",
     "Sale Price",
+    "Unit Cost",
     "Postage Cost",
     "Handling Cost",
+    "Transaction Fee",
     "Promo Cost",
     "Refund (?)",
     "Refund Amount",
     "Replacement (?)",
     "Replacement Cost",
     "Returned (?)",
+    "Expenditure",
+    "Profit / Loss",
+    "Profit Margin",
 ]
 
 
 def write_excel(rows: list[dict], output_path: str):
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "eBay Orders"
-
-    ws.append(COLUMNS)
-
-    for row in rows:
-        ws.append([row.get(col, "") for col in COLUMNS])
-
-    wb.save(output_path)
+    with open(output_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(
+            f, fieldnames=COLUMNS, extrasaction="ignore"
+        )
+        writer.writeheader()
+        writer.writerows(rows)
     print(f"Saved {len(rows)} rows → {output_path}")

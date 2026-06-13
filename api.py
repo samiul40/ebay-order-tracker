@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 import requests
 
 from config import ORDERS_URL
@@ -25,9 +27,11 @@ def fetch_orders(token: str, from_date: str, to_date: str) -> list[dict]:
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json",
     }
-    # eBay expects ISO 8601 UTC
+    # eBay expects ISO 8601 UTC; cap end time at now to avoid "future date" errors
     from_iso = f"{from_date}T00:00:00.000Z"
-    to_iso = f"{to_date}T23:59:59.999Z"
+    end_of_day = datetime.fromisoformat(f"{to_date}T23:59:59+00:00")
+    capped = min(end_of_day, datetime.now(timezone.utc))
+    to_iso = capped.strftime("%Y-%m-%dT%H:%M:%S.000Z")
 
     orders = []
     offset = 0
@@ -40,6 +44,8 @@ def fetch_orders(token: str, from_date: str, to_date: str) -> list[dict]:
             "offset": offset,
         }
         resp = requests.get(ORDERS_URL, headers=headers, params=params)
+        if not resp.ok:
+            print(f"API error {resp.status_code}: {resp.text}")
         resp.raise_for_status()
         data = resp.json()
         page = data.get("orders", [])

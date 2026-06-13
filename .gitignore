@@ -1,6 +1,8 @@
 .env
+.tokens.json
 __pycache__/
 *.pyc
 *.xlsx
+*.csv
 .DS_Store
 venv/

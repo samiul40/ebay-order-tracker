@@ -54,7 +54,10 @@ def parse_date(iso_str: str) -> str:
 
 
 def transform_orders(
-    orders: list[dict], product_map: dict, postage_costs: dict
+    orders: list[dict],
+    product_map: dict,
+    postage_costs: dict,
+    ad_fees: dict[str, float] | None = None,
 ) -> list[dict]:
     title_index = build_title_index(product_map)
     rows = []
@@ -69,25 +72,37 @@ def transform_orders(
         # Order-level costs split evenly across all line items
         pricing = order.get("pricingSummary", {})
         delivery_cost = parse_amount(pricing.get("deliveryCost", 0))
+        order_total = parse_amount(pricing.get("total", 0))
         postage_per_item = (
             round(delivery_cost / len(line_items), 2) if line_items else 0
         )
 
-        adjustments = order.get("adjustments", [])
-        promo_total = sum(
-            parse_amount(a.get("amount", 0))
-            for a in adjustments
-            if a.get("adjustmentType") == "PROMOTION"
-        )
-        promo_per_item = round(promo_total / len(line_items), 2) if line_items else 0
-
         payment_summary = order.get("paymentSummary", {})
+        total_due_seller = parse_amount(
+            payment_summary.get("totalDueSeller", 0)
+        )
+        transaction_fee = round(order_total - total_due_seller, 2)
+        transaction_fee_per_item = (
+            round(transaction_fee / len(line_items), 2) if line_items else 0
+        )
+
+        ad_fee = (ad_fees or {}).get(order_id, 0)
+        ad_fee_per_item = (
+            round(ad_fee / len(line_items), 2) if line_items else 0
+        )
+
         refunds = payment_summary.get("refunds", [])
         has_refund = len(refunds) > 0
-        refund_amount = sum(parse_amount(r.get("amount", 0)) for r in refunds)
+        refund_amount = sum(
+            parse_amount(r.get("amount", 0)) for r in refunds
+        )
 
         for item in line_items:
             ebay_title = item.get("title", "")
+            variation_aspects = item.get("variationAspects", [])
+            if variation_aspects:
+                variant_str = ",".join(v.get("value", "") for v in variation_aspects)
+                ebay_title = f"{ebay_title}[{variant_str}]"
             # Map eBay title → internal product name and bag size
             internal_name, postage_type = map_product(
                 ebay_title, title_index, product_map
@@ -105,7 +120,6 @@ def transform_orders(
 
             components = product_map.get(internal_name, {}).get("components")
             if components:
-                # Multipack: one eBay listing → multiple sub-products, costs ÷ n
                 n = len(components)
                 refund_per = round(refund_amount / n, 2) if has_refund else ""
                 for component in components:
@@ -121,7 +135,10 @@ def transform_orders(
                             "Sale Price": round(sale_price / n, 2),
                             "Postage Cost": round(postage_per_item / n, 2),
                             "Handling Cost": round(handling_cost / n, 2),
-                            "Promo Cost": round(promo_per_item / n, 2),
+                            "Transaction Fee": round(
+                                transaction_fee_per_item / n, 2
+                            ),
+                            "Promo Cost": round(ad_fee_per_item / n, 2),
                             "Refund (?)": "TRUE" if has_refund else "FALSE",
                             "Refund Amount": refund_per,
                             "Replacement (?)": "FALSE",
@@ -142,9 +159,12 @@ def transform_orders(
                         "Sale Price": sale_price,
                         "Postage Cost": postage_per_item,
                         "Handling Cost": handling_cost,
-                        "Promo Cost": promo_per_item,
+                        "Transaction Fee": transaction_fee_per_item,
+                        "Promo Cost": ad_fee_per_item,
                         "Refund (?)": "TRUE" if has_refund else "FALSE",
-                        "Refund Amount": round(refund_amount, 2) if has_refund else "",
+                        "Refund Amount": (
+                            round(refund_amount, 2) if has_refund else ""
+                        ),
                         "Replacement (?)": "FALSE",
                         "Replacement Cost": "",
                         "Returned (?)": "FALSE",
