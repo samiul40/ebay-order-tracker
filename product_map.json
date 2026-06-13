@@ -1,0 +1,57 @@
+{
+  "Black Shoe Protector - Size L": {
+    "ebay_titles": [
+      "Black Shoe Protector - Size L",
+      "Black Shoe Protector Large",
+      "Black Shoe Protector L"
+    ],
+    "postage_type": "large"
+  },
+  "Black Shoe Protector - Size S": {
+    "ebay_titles": [
+      "Black Shoe Protector - Size S",
+      "Black Shoe Protector Small",
+      "Black Shoe Protector S"
+    ],
+    "postage_type": "large"
+  },
+  "White Shoe Protector - Size L": {
+    "ebay_titles": [
+      "White Shoe Protector - Size L",
+      "White Shoe Protector Large",
+      "White Shoe Protector L"
+    ],
+    "postage_type": "large"
+  },
+  "White Shoe Protector - Size S": {
+    "ebay_titles": [
+      "White Shoe Protector - Size S",
+      "White Shoe Protector Small",
+      "White Shoe Protector S"
+    ],
+    "postage_type": "large"
+  },
+  "Black Aux Type C Adapter": {
+    "ebay_titles": [
+      "Black Aux Type C Adapter",
+      "Black Aux Adapter Type C",
+      "Type C Aux Adapter Black"
+    ],
+    "postage_type": "small"
+  },
+  "White Aux Type C Adapter": {
+    "ebay_titles": [
+      "White Aux Type C Adapter",
+      "White Aux Adapter Type C",
+      "Type C Aux Adapter White"
+    ],
+    "postage_type": "small"
+  },
+  "Metal Straw": {
+    "ebay_titles": [
+      "Metal Straw",
+      "Reusable Metal Straw"
+    ],
+    "postage_type": "large"
+  }
+}
