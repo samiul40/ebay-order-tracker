@@ -1,6 +1,6 @@
 # eBay Order Tracker
 
-Pulls weekly eBay orders via the Fulfillment API and outputs a ready-to-paste Excel file matching the Sales Order Google Sheet.
+Pulls eBay orders via the Fulfillment API and outputs a CSV matching the Sales Order finance tracker.
 
 ## Setup
 
@@ -10,16 +10,36 @@ pip install -r requirements.txt
 ```
 
 ### 2. eBay Developer credentials
-1. Go to https://developer.ebay.com and sign in with your seller account
-2. Create an application → go to **User Tokens** → generate **Production** keys
-3. You need the **Client ID** and **Client Secret**
-4. The required OAuth scope is: `https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly`
+
+1. Go to [developer.ebay.com](https://developer.ebay.com) and sign in with your seller account
+2. Create an application (no hyphens in the name)
+3. Apply for a **Marketplace Account Deletion exemption** (select "I do not persist eBay data")
+4. Under **User Tokens → Your eBay Sign-in Settings**, add a redirect URL:
+   - URL: `https://example.com`
+   - Enable **OAuth**
+   - Note the generated **RuName**
+5. Copy your **App ID (Client ID)** and **Cert ID (Client Secret)** from the Application Keys page
 
 ### 3. Configure environment
 ```bash
 cp .env.example .env
-# Edit .env and fill in your EBAY_CLIENT_ID and EBAY_CLIENT_SECRET
 ```
+
+Edit `.env` and fill in:
+```
+EBAY_CLIENT_ID=your-app-id
+EBAY_CLIENT_SECRET=your-cert-id
+EBAY_RUNAME=your-runame
+EBAY_ENV=production
+```
+
+### 4. First run — authorise the app
+
+```bash
+python fetch_orders.py
+```
+
+A browser will open asking you to log in to eBay and grant access. After clicking "Agree and Continue" you'll be redirected to `example.com` — copy the full URL from the address bar and paste it into the terminal prompt. This only happens once; the token is saved to `.tokens.json` for future runs.
 
 ## Usage
 
@@ -28,45 +48,73 @@ cp .env.example .env
 python fetch_orders.py
 
 # Specific date range
-python fetch_orders.py --from 2024-12-28 --to 2024-12-31
+python fetch_orders.py --from 2026-06-01 --to 2026-06-13
 
-# Custom output filename
-python fetch_orders.py --from 2025-01-01 --to 2025-01-07 --out january_week1.xlsx
+# Custom output path
+python fetch_orders.py --from 2026-06-01 --to 2026-06-13 --out output/june.csv
 ```
 
-The script outputs an `.xlsx` file with these columns (matching the Sales Order sheet):
+Output is saved to `output/ebay_orders_YYYY-MM-DD.csv`.
 
-`Date | Platform | Order ID | Multiple (?) | batch_id | Product | Quantity | Sale Price | Postage Cost | Handling Cost | Promo Cost | Refund (?) | Refund Amount | Replacement (?) | Replacement Cost | Returned (?)`
+### Output columns
 
-Columns left blank are auto-calculated by formulas in the sheet (Unit Cost, Category, Transaction Fee, Expenditure, Profit/Loss, Profit Margin).
+| Column | Source |
+|---|---|
+| Date | eBay API |
+| Date (num) | Manual |
+| Platform | Auto (eBay) |
+| Order ID | eBay API |
+| Multiple (?) | eBay API |
+| Batch Helper | Manual |
+| batch_id | Manual |
+| Product | eBay API → product_map.json |
+| Category | Manual |
+| Quantity | eBay API |
+| Sale Price | eBay API |
+| Unit Cost | Manual |
+| Postage Cost | eBay API |
+| Handling Cost | postage_costs.json |
+| Transaction Fee | eBay API (calculated) |
+| Promo Cost | Manual (ad fee from eBay order page) |
+| Refund (?) | eBay API |
+| Refund Amount | eBay API |
+| Replacement (?) | Manual |
+| Replacement Cost | Manual |
+| Returned (?) | Manual |
+| Expenditure | Manual |
+| Profit / Loss | Manual |
+| Profit Margin | Manual |
 
 ## Configuring products
 
 ### `product_map.json`
-Maps eBay listing titles to your internal product names and postage type:
+Maps eBay listing titles (including variant) to your internal product names and postage type:
 
 ```json
 {
   "Black Shoe Protector - Size L": {
-    "ebay_titles": ["Black Shoe Protector Large", "..."],
-    "postage_type": "large"
+    "ebay_titles": [
+      "Shoe Shield Crease Trainer Protector[Black,L UK 7-12 / EU 41-46]"
+    ],
+    "postage_type": "Grey Plastic Mail Postage: 10\" - 14\""
   }
 }
 ```
 
-Add a new entry whenever you list a new product on eBay. The script uses fuzzy matching so minor title variations are handled automatically.
+Add a new entry whenever you list a new product. If a title isn't matched, the row is flagged with `???` in the Product column.
 
 ### `postage_costs.json`
-Controls the Handling Cost per postage bag type. Update these when you buy new postage bags at a different price:
+Handling cost (packaging material) per postage bag type. Update when bag prices change:
 
 ```json
 {
-  "small": 0.03,
-  "large": 0.04
+  "Grey Plastic Mail Postage: 4\" - 6\"": 0.03,
+  "Grey Plastic Mail Postage: 10\" - 14\"": 0.04
 }
 ```
 
 ## Troubleshooting
 
-- **`??? Product Name`** in the output — eBay title didn't match any entry in `product_map.json`. Add it to the file.
-- **Auth errors** — double-check your `.env` credentials and that you're using Production keys (not Sandbox).
+- **`??? Product Name`** in the output — add the eBay title (with variant in brackets) to `product_map.json`
+- **Auth errors** — delete `.tokens.json` and re-run to re-authorise
+- **"dates in the future" error** — this is handled automatically; the end time is capped at now
