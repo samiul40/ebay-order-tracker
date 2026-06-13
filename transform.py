@@ -121,8 +121,31 @@ def transform_orders(
             components = product_map.get(internal_name, {}).get("components")
             if components:
                 n = len(components)
-                refund_per = round(refund_amount / n, 2) if has_refund else ""
-                for component in components:
+                # Each unit gets an equal split; the last absorbs any rounding remainder so totals always match exactly.
+                unit_sale = round(sale_price / n, 2)
+                unit_postage = round(postage_per_item / n, 2)
+                unit_handling = round(handling_cost / n, 2)
+                unit_txn = round(transaction_fee_per_item / n, 2)
+                unit_ad = round(ad_fee_per_item / n, 2)
+                unit_refund = round(refund_amount / n, 2) if has_refund else None
+
+                for i, component in enumerate(components):
+                    is_last = i == n - 1
+                    if is_last:
+                        comp_sale = round(sale_price - unit_sale * (n - 1), 2)
+                        comp_postage = round(postage_per_item - unit_postage * (n - 1), 2)
+                        comp_handling = round(handling_cost - unit_handling * (n - 1), 2)
+                        comp_txn = round(transaction_fee_per_item - unit_txn * (n - 1), 2)
+                        comp_ad = round(ad_fee_per_item - unit_ad * (n - 1), 2)
+                        comp_refund = round(refund_amount - unit_refund * (n - 1), 2) if has_refund else ""
+                    else:
+                        comp_sale = unit_sale
+                        comp_postage = unit_postage
+                        comp_handling = unit_handling
+                        comp_txn = unit_txn
+                        comp_ad = unit_ad
+                        comp_refund = unit_refund if has_refund else ""
+
                     rows.append(
                         {
                             "Date": creation_date,
@@ -132,15 +155,13 @@ def transform_orders(
                             "batch_id": "",
                             "Product": component,
                             "Quantity": quantity,
-                            "Sale Price": round(sale_price / n, 2),
-                            "Postage Cost": round(postage_per_item / n, 2),
-                            "Handling Cost": round(handling_cost / n, 2),
-                            "Transaction Fee": round(
-                                transaction_fee_per_item / n, 2
-                            ),
-                            "Promo Cost": round(ad_fee_per_item / n, 2),
+                            "Sale Price": comp_sale,
+                            "Postage Cost": comp_postage,
+                            "Handling Cost": comp_handling,
+                            "Transaction Fee": comp_txn,
+                            "Promo Cost": comp_ad,
                             "Refund (?)": "TRUE" if has_refund else "FALSE",
-                            "Refund Amount": refund_per,
+                            "Refund Amount": comp_refund,
                             "Replacement (?)": "FALSE",
                             "Replacement Cost": "",
                             "Returned (?)": "FALSE",
